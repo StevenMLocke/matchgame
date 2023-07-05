@@ -1,13 +1,11 @@
-import { generateCards } from "../lib/serverfuncs/serverFuncs";
+"use client";
 
-export async function CardGrid({ numberOfCards }) {
-	const cards = await generateCards(24);
+export function CardGrid({ children }) {
 	return (
 		<div className='flex flex-col'>
 			<div className='border-4 border-black flex flex-1 flex-wrap justify-center gap-2 p-2'>
-				{...cards}
+				{children}
 			</div>
-			{/* <pre>{JSON.stringify(selectedSet, null, 2)}</pre> */}
 		</div>
 	);
 }
