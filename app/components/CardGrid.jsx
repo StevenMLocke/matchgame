@@ -2,10 +2,8 @@
 
 export function CardGrid({ children }) {
 	return (
-		<div className='flex flex-col'>
-			<div className='border-4 border-black flex flex-1 flex-wrap justify-center gap-2 p-2'>
-				{children}
-			</div>
+		<div className='flex grow-0 flex-wrap items-center justify-center gap-2 md:max-w-[90%]'>
+			{children}
 		</div>
 	);
 }

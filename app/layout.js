@@ -12,7 +12,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
-			<body className={`${inter.className} flex justify-center border-blue-500 border-2`}>
+			<body className={`${inter.className} flex h-[100cqmax] sm:h-[100cqmin] justify-center items-center`}>
 				<Suspense fallback={<p>Wait...</p>} >
 					{children}
 				</Suspense>

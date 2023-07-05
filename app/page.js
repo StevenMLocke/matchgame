@@ -1,5 +1,5 @@
 "use client"
-import { useState, useMemo, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Suspense } from "react"
 import { CardGrid } from "./components/CardGrid"
 import { Card } from "./components/Card";
@@ -33,18 +33,66 @@ export default function Game() {
 	const [matched, setMatched] = useState([]);
 	const [selected, setSelected] = useState([]);
 	const [values, setValues] = useState()
+	const [playAgain, setPlayAgain] = useState(false)
+	const [victory, setVictory] = useState(false)
+
+	const num = 24
+
+	const modalRef = useRef()
+
 	const clickHandler = (id, value) => {
 		setSelected(p => [...p, { id, value }])
+		if (selected.length == 1) {
+			if (selected[0].id !== id) {
+				if (selected[0].value == value) {
+					if (!matched.some((num) => num == value)) {
+						setMatched(p => [...p, value])
+					}
+				}
+				setTimeout(() => setSelected([]), 750)
+			} else {
+				setSelected([])
+			}
+		}
 	};
-	const num = 16
+
+	const modalHandler = () => {
+		setPlayAgain(p => !p)
+		setMatched([])
+		setSelected([])
+		setVictory(false)
+		modalRef.current.close()
+	}
 
 	useEffect(() => {
 		setValues(generateValues(num))
-	}, [])
+	}, [playAgain])
+
+	useEffect(() => {
+		if (matched.length == num / 2) {
+			setVictory(true)
+		}
+	}, [matched])
+
+	useEffect(() => {
+		if (victory) {
+			modalRef.current.showModal()
+		}
+	}, [victory])
 
 	return (
 		<>
-			<main className="m-8 p-8 border-2 border-white w-[90%]">
+
+			<dialog
+				ref={modalRef}
+				className="modal flex flex-col flex-1 min-w-full min-h-full justify-center items-center backdrop-blur-md"
+				onClick={modalHandler}
+			>
+				<h1 className="text-2xl md:text-9xl">You Win!!</h1>
+				<h2 className="hover:cursor-pointer md:text-6xl">Play again!</h2>
+			</dialog>
+
+			<main className=" sm:w-[90%] min-h-full flex flex-1 justify-center items-center">
 				<Suspense fallback={<p>poo</p>}>
 					<CardGrid >
 						{values?.map((value) => {
@@ -61,7 +109,6 @@ export default function Game() {
 						})}
 					</CardGrid>
 				</Suspense>
-				{/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
 			</main>
 		</>
 	)
