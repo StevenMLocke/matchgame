@@ -12,8 +12,10 @@ In studying luthiery I have read that the art itself is less about the building 
 
 ## In the end...
 
-It's all hooks all the way down. The logic of the thing wasn't too hard to consider. What was difficult was wrangling state and render. Especially considering NextJs defaults to React Server Components which will build in one render then hydrate child React Child Components in the next render. 
+It's all hooks all the way down. 
 
-This was all fine and great until I tried to generate a randomized array. It was tricky to find a way to not re-generate on every render.  I tried different tactics like useMemo (didn't work) or generate after initial render by using useEffect.  That sort of worked, just not on its own.
+The logic of the thing wasn't too hard to consider. What was difficult was wrangling state and render. Especially considering NextJs defaults to React Server Components which will build in one render then hydrate child React Client Components in the next render. 
+
+This was all fine and great until I tried to generate a randomized array. It was tricky to find a way to not re-generate on every render. I tried different tactics like useMemo - didn't work, or generate after initial render with useEffect. That sort of worked, just not on its own.
 
 After all is said and done, it was not only a good learning experience but also a good humbling experience and I got a functioning app out of it.
